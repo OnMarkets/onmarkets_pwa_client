@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name" translatable="false">OnMarkets</string>
+    <string name="offline_heading">Você está offline.</string>
+    <string name="offline_description">Clique aqui para reiniciar!</string>
+    <string name="noapp_heading">Aplicativo não encontrado.</string>
+    <string name="noapp_description">Nenhum aplicativo neste dispositivo pode realizar esta ação.</string>
+</resources>
