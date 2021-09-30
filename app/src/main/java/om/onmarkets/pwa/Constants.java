@@ -4,7 +4,7 @@ public class Constants {
     public Constants(){}
     // Root page
     public static String WEBAPP_URL = "https://onmarkets.com.br";
-    public static String WEBAPP_HOST = "onmarkets.com.br"; // used for checking Intent-URLs
+    public static String WEBAPP_HOST = "https://onmarkets.com.br"; // used for checking Intent-URLs
 
 	// User Agent tweaks
     public static boolean POSTFIX_USER_AGENT = true; // set to true to append USER_AGENT_POSTFIX to user agent

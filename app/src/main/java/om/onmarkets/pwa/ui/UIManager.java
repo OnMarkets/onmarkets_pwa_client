@@ -93,7 +93,7 @@ public class UIManager {
     // set icon in recent activity view to a white one to be visible in the app bar
     public void changeRecentAppsIcon() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Bitmap iconWhite = BitmapFactory.decodeResource(activity.getResources(), R.drawable.ic_appbar);
+            Bitmap iconWhite = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher_foreground);
 
             TypedValue typedValue = new TypedValue();
             Resources.Theme theme = activity.getTheme();

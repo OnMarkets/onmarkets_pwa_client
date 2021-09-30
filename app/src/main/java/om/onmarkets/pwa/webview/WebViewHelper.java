@@ -1,8 +1,10 @@
 package om.onmarkets.pwa.webview;
+
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -83,6 +85,8 @@ public class WebViewHelper {
         // must be set for our js-popup-blocker:
         webSettings.setSupportMultipleWindows(true);
 
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+
         // PWA settings
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             webSettings.setDatabasePath(activity.getApplicationContext().getFilesDir().getAbsolutePath());
@@ -122,15 +126,29 @@ public class WebViewHelper {
             //simple yet effective redirect/popup blocker
             @Override
             public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
-                Message href = view.getHandler().obtainMessage();
-                view.requestFocusNodeHref(href);
-                final String popupUrl = href.getData().getString("url");
-                if (popupUrl != null) {
-                    //it's null for most rouge browser hijack ads
-                    webView.loadUrl(popupUrl);
-                    return true;
-                }
-                return false;
+
+                Context context = view.getContext();
+                WebView newWebView = new WebView(context);
+                WebSettings webSettings = newWebView.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+
+                // Other configuration comes here, such as setting the WebViewClient
+
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(newWebView);
+                dialog.show();
+
+                newWebView.setWebChromeClient(new WebChromeClient() {
+                    @Override
+                    public void onCloseWindow(WebView window) {
+                        dialog.dismiss();
+                    }
+                });
+
+                ((WebView.WebViewTransport)resultMsg.obj).setWebView(newWebView);
+                resultMsg.sendToTarget();
+                return true;
+
             }
 
             @Override
